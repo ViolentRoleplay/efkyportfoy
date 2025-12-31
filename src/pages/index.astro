@@ -16,14 +16,17 @@ const featuredProjects = [
 ---
 
 <Layout title="Ana Sayfa" description="EfkyTech - İnovatif teknoloji çözümleri sunan modern bir yazılım şirketi.">
-  <div class="pt-20">
+  <!-- Particle Network Background - Full Page -->
+  <canvas id="particles-canvas-full" class="fixed inset-0 w-full h-full opacity-30 dark:opacity-20 pointer-events-none" style="z-index: 0;"></canvas>
+  
+  <div class="pt-20 relative" style="z-index: 1;">
     <!-- Hero Section with Parallax -->
     <section class="hero-parallax relative overflow-hidden container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 lg:py-40">
       <!-- Parallax Background Layers -->
-      <div class="parallax-bg-layer absolute inset-0 opacity-5 dark:opacity-10" data-parallax="bg"></div>
-      <div class="parallax-bg-layer-2 absolute inset-0 opacity-10 dark:opacity-20" data-parallax="bg2"></div>
+      <div class="parallax-bg-layer absolute inset-0 opacity-5 dark:opacity-10" data-parallax="bg" style="z-index: 1;"></div>
+      <div class="parallax-bg-layer-2 absolute inset-0 opacity-10 dark:opacity-20" data-parallax="bg2" style="z-index: 1;"></div>
       
-      <div class="text-center max-w-4xl mx-auto relative z-10">
+      <div class="text-center max-w-4xl mx-auto relative z-10" style="z-index: 2;">
         <h1 
           class="hero-title text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-gray-900 dark:text-white leading-tight tracking-tight text-reveal"
           data-parallax="title"
@@ -169,10 +172,133 @@ const featuredProjects = [
   
   gsap.registerPlugin(ScrollTrigger);
 
+  // Particle Network Background - Full Page
+  function initParticleNetwork() {
+    const canvas = document.getElementById('particles-canvas-full') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size - full viewport
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Particle class
+    class Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#0070f3'; // Blue brand color
+        ctx.fill();
+      }
+    }
+
+    // Create particles
+    const particleCount = window.innerWidth < 768 ? 50 : 80;
+    const particles: Particle[] = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    // Mouse position
+    let mouseX = 0;
+    let mouseY = 0;
+    let mouseRadius = 100;
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      mouseX = -1000;
+      mouseY = -1000;
+    });
+
+    // Draw connections
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 112, 243, ${1 - distance / 120})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+
+        // Connect to mouse
+        const dx = particles[i].x - mouseX;
+        const dy = particles[i].y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouseRadius) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(0, 112, 243, ${0.5 - distance / mouseRadius * 0.5})`;
+          ctx.lineWidth = 1;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouseX, mouseY);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      drawConnections();
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+
   // Initialize all animations
   function initAnimations() {
     initHeroParallax();
     initMagneticButtons();
+    initParticleNetwork();
     // Split text reveal for intro section
     initSplitTextReveal('.split-text-reveal');
     // Zoom reveal for project cards
