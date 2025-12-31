@@ -1,0 +1,309 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TechStack from '../components/TechStack.astro';
+
+const featuredProjects = [
+  {
+    title: 'MYGOLD60 Factory Website',
+    description: 'Kurumsal fabrika yönetim web sitesi. Modern ve kullanıcı dostu arayüz ile fabrika operasyonlarını dijitalleştiren kapsamlı bir çözüm.',
+    githubUrl: 'https://github.com/habnetfurkan4-sketch/fabrika-site',
+    techStack: ['TypeScript', 'CSS', 'JavaScript'],
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop',
+  },
+];
+---
+
+<Layout title="Ana Sayfa" description="EfkyTech - İnovatif teknoloji çözümleri sunan modern bir yazılım şirketi.">
+  <div class="pt-20">
+    <!-- Hero Section with Parallax -->
+    <section class="hero-parallax relative overflow-hidden container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 lg:py-40">
+      <!-- Parallax Background Layers -->
+      <div class="parallax-bg-layer absolute inset-0 opacity-5 dark:opacity-10" data-parallax="bg"></div>
+      <div class="parallax-bg-layer-2 absolute inset-0 opacity-10 dark:opacity-20" data-parallax="bg2"></div>
+      
+      <div class="text-center max-w-4xl mx-auto relative z-10">
+        <h1 
+          class="hero-title text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-gray-900 dark:text-white leading-tight tracking-tight text-reveal"
+          data-parallax="title"
+        >
+          EfkyTech
+        </h1>
+        <p 
+          class="hero-subtitle text-2xl md:text-3xl lg:text-4xl text-gray-600 dark:text-gray-400 mb-6 font-light text-reveal"
+          data-parallax="subtitle"
+        >
+          İnovatif Teknoloji Çözümleri
+        </p>
+        <p 
+          class="hero-description text-lg md:text-xl text-gray-500 dark:text-gray-500 mb-12 text-reveal"
+          data-parallax="description"
+        >
+          Furkan R. Yalın & Emre Kınay – CEO'lar & Kurucular
+        </p>
+        <div 
+          class="flex flex-col sm:flex-row gap-4 justify-center hero-buttons"
+          data-parallax="buttons"
+        >
+          <a
+            href="/projects"
+            class="magnetic-btn px-8 py-4 bg-blue-brand hover:bg-blue-600 text-white rounded-lg font-semibold transition-all shadow-sm hover:shadow-md hover-lift"
+          >
+            Projeleri Keşfet
+          </a>
+          <a
+            href="/contact"
+            class="magnetic-btn px-8 py-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg font-semibold transition-all hover-lift"
+          >
+            İletişime Geç
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 
+          class="text-4xl md:text-5xl font-bold mb-8 text-gray-900 dark:text-white scrub-reveal"
+        >
+          Hakkımızda
+        </h2>
+        <div 
+          class="space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed scrub-reveal"
+        >
+          <p>
+            EfkyTech, modern yazılım çözümleri geliştiren dinamik bir teknoloji şirketidir. 
+            Müşterilerimize en iyi deneyimi sunmak için sürekli yenilikçi yaklaşımlar benimsiyoruz.
+          </p>
+          <p>
+            Kurumsal web sitelerinden özel yazılım projelerine kadar geniş bir yelpazede 
+            hizmet veriyoruz. Teknoloji ve tasarımı bir araya getirerek, işletmelerin 
+            dijital dönüşüm yolculuklarında güvenilir bir partner olmayı hedefliyoruz.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <TechStack />
+
+    <!-- Featured Projects Section -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+          Öne Çıkan Projeler
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          En son geliştirdiğimiz projelerden birkaçını keşfedin
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {featuredProjects.map((project, index) => (
+          <div data-aos="fade-up" data-aos-delay={index * 100}>
+            <ProjectCard {...project} />
+          </div>
+        ))}
+      </div>
+      
+      <div class="text-center mt-16" data-aos="fade-up">
+        <a
+          href="/projects"
+          class="magnetic-btn inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg font-medium transition-all hover-lift"
+        >
+          Tüm Projeleri Görüntüle
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div 
+        class="max-w-3xl mx-auto text-center bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-12 md:p-16"
+        data-aos="fade-up"
+      >
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+          Projenizi Hayata Geçirelim
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 leading-relaxed">
+          İnovatif çözümlerimizle işletmenizi bir sonraki seviyeye taşıyalım. 
+          Hemen iletişime geçin ve projeleriniz için en iyi çözümü birlikte bulalım.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/contact"
+            class="magnetic-btn px-8 py-4 bg-blue-brand hover:bg-blue-600 text-white rounded-lg font-semibold transition-all shadow-sm hover:shadow-md hover-lift"
+          >
+            İletişime Geç
+          </a>
+          <a
+            href="/projects"
+            class="magnetic-btn px-8 py-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg font-semibold transition-all hover-lift"
+          >
+            Projelerimizi İncele
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero Parallax - Multi-layer
+  function initHeroParallax() {
+    const heroSection = document.querySelector('.hero-parallax');
+    if (!heroSection) return;
+
+    // Background layers parallax (slow movement)
+    gsap.to('[data-parallax="bg"]', {
+      yPercent: 50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    gsap.to('[data-parallax="bg2"]', {
+      yPercent: 30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // Text elements parallax (faster movement)
+    gsap.to('[data-parallax="title"]', {
+      yPercent: -20,
+      opacity: 0.8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    gsap.to('[data-parallax="subtitle"]', {
+      yPercent: -15,
+      opacity: 0.9,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    gsap.to('[data-parallax="description"]', {
+      yPercent: -10,
+      opacity: 0.9,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    gsap.to('[data-parallax="buttons"]', {
+      yPercent: -5,
+      opacity: 0.95,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  }
+
+  // Image/Text Reveal with Scrub
+  function initScrubReveal() {
+    const revealElements = document.querySelectorAll('.scrub-reveal');
+    
+    revealElements.forEach((element) => {
+      gsap.fromTo(element, 
+        {
+          opacity: 0,
+          y: 60,
+          scale: 0.95
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: true
+          }
+        }
+      );
+    });
+  }
+
+  // Magnetic button effect
+  function initMagneticButtons() {
+    const magneticButtons = document.querySelectorAll('.magnetic-btn');
+    
+    magneticButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        gsap.to(btn, {
+          x: x * 0.3,
+          y: y * 0.3,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+    });
+  }
+
+  // Initialize animations when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeroParallax();
+      initScrubReveal();
+      initMagneticButtons();
+    });
+  } else {
+    initHeroParallax();
+    initScrubReveal();
+    initMagneticButtons();
+  }
+</script>

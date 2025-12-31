@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'MYGOLD60 Factory Website',
+    description: 'Kurumsal fabrika yönetim web sitesi. Modern ve kullanıcı dostu arayüz ile fabrika operasyonlarını dijitalleştiren kapsamlı bir çözüm.',
+    githubUrl: 'https://github.com/habnetfurkan4-sketch/fabrika-site',
+    techStack: ['TypeScript', 'CSS', 'JavaScript'],
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop',
+  },
+];
+---
+
+<Layout title="Projeler" description="EfkyTech'in geliştirdiği projeleri keşfedin.">
+  <div class="pt-20">
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 
+          class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 dark:text-white scrub-reveal"
+        >
+          Projelerimiz
+        </h1>
+        <p 
+          class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed scrub-reveal"
+        >
+          Geliştirdiğimiz projeler ve açık kaynak katkılarımız
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {projects.map((project, index) => (
+          <div class="scrub-reveal">
+            <ProjectCard {...project} />
+          </div>
+        ))}
+      </div>
+      
+      {projects.length === 0 && (
+        <div class="text-center py-20 scrub-reveal">
+          <p class="text-gray-600 dark:text-gray-400 text-lg">
+            Yakında daha fazla proje eklenecek. Bizi takip etmeye devam edin!
+          </p>
+        </div>
+      )}
+    </section>
+
+    <!-- CTA Section -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div 
+        class="max-w-3xl mx-auto text-center bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-12 md:p-16"
+        data-aos="fade-up"
+      >
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white scrub-reveal">
+          Projeniz İçin Hazırız
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 leading-relaxed scrub-reveal">
+          Benzer bir proje mi geliştirmek istiyorsunuz? Veya özel bir çözüme mi ihtiyacınız var? 
+          Hemen iletişime geçin, birlikte harika şeyler yapalım.
+        </p>
+        <a
+          href="/contact"
+          class="magnetic-btn inline-flex items-center gap-2 px-8 py-4 bg-blue-brand hover:bg-blue-600 text-white rounded-lg font-semibold transition-all shadow-sm hover:shadow-md hover-lift"
+        >
+          İletişime Geç
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+
+  // Scrub Reveal for general elements
+  function initScrubReveal() {
+    const revealElements = document.querySelectorAll('.scrub-reveal');
+    
+    revealElements.forEach((element) => {
+      gsap.fromTo(element, 
+        {
+          opacity: 0,
+          y: 60,
+          scale: 0.95
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: true
+          }
+        }
+      );
+    });
+  }
+
+  // Magnetic button effect
+  function initMagneticButtons() {
+    const magneticButtons = document.querySelectorAll('.magnetic-btn');
+    
+    magneticButtons.forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        gsap.to(btn, {
+          x: x * 0.3,
+          y: y * 0.3,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+    });
+  }
+
+  // Initialize animations when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrubReveal();
+      initMagneticButtons();
+    });
+  } else {
+    initScrubReveal();
+    initMagneticButtons();
+  }
+</script>
