@@ -70,5 +70,5 @@ The contact form sends messages directly to WhatsApp. No additional configuratio
 
 ## 📄 License
 
-© 2024 EfkyTech. All rights reserved.
+© 2026 EfkyTech. All rights reserved.
 

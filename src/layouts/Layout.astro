@@ -17,7 +17,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Favicons - EfkyTech Logo -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/efkylogo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/efkylogo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/efkylogo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title} | EfkyTech</title>
@@ -39,6 +44,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="author" content="Furkan R. Yalın" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0070f3" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
