@@ -2,6 +2,9 @@
 
 Modern, responsive portfolio website for EfkyTech built with Astro, TypeScript, and Tailwind CSS.
 
+**Developed by:** Furkan R. Yalın  
+**Email:** furkanyalinn@icloud.com
+
 ## 🚀 Quick Start
 
 ```bash
@@ -24,23 +27,48 @@ npm run preview
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
 - **React** - Interactive components
+- **GSAP** - Advanced animations
+- **Lenis** - Smooth scrolling
+
+## ✨ Features
+
+- 🎨 Modern and responsive design
+- 🌓 Dark mode support
+- ⚡ Optimized performance with Astro Image component
+- 🎭 Smooth scroll animations with Lenis
+- 🎬 Advanced scroll-driven animations with GSAP ScrollTrigger
+- 📱 Mobile-first responsive design
+- ♿ Accessible and SEO-friendly
 
 ## 🌐 Deployment
 
-This site is optimized for deployment on Vercel or Netlify. Simply connect your repository and deploy!
+This site is optimized for deployment on Vercel, Netlify, or Cloudflare Pages. See `DEPLOYMENT.md` for detailed deployment instructions.
 
-## 📝 Configuration
+### Quick Deploy to Vercel
 
-### Contact Form
+1. Push your code to GitHub
+2. Import project on [Vercel](https://vercel.com)
+3. Deploy automatically!
 
-The contact form uses Formspree. To set it up:
+## 📝 Project Structure
 
-1. Go to https://formspree.io and create a free account
-2. Create a new form and get your form ID
-3. Update the form action URL in `src/pages/contact.astro`:
-   ```astro
-   action="https://formspree.io/f/YOUR_FORM_ID"
-   ```
+```
+/
+├── public/          # Static assets (images, logos)
+├── src/
+│   ├── components/  # Reusable Astro components
+│   ├── layouts/     # Page layouts
+│   ├── pages/       # Route pages
+│   ├── scripts/     # Client-side scripts
+│   └── styles/      # Global styles
+└── astro.config.mjs # Astro configuration
+```
 
-Alternatively, you can replace the form with direct email links or use another form service.
+## 📧 Contact Form
+
+The contact form sends messages directly to WhatsApp. No additional configuration needed!
+
+## 📄 License
+
+© 2024 EfkyTech. All rights reserved.
 
