@@ -217,5 +217,49 @@
     opacity: 0;
     transform: translateY(60px) scale(0.95);
   }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .scrub-reveal,
+    .founder-card {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* Performance optimizations */
+  .magnetic-btn,
+  .scrub-reveal,
+  .founder-card {
+    will-change: transform;
+  }
+
+  /* Smooth scrollbar styling (if using custom scrollbar) */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 112, 243, 0.3);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 112, 243, 0.5);
+  }
 }
 

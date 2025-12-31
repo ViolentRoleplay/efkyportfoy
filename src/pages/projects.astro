@@ -19,23 +19,23 @@ const projects = [
     <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div class="max-w-3xl mx-auto text-center">
         <h1 
-          class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 dark:text-white scrub-reveal"
+          class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 dark:text-white fade-in"
         >
           Projelerimiz
         </h1>
         <p 
-          class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed scrub-reveal"
+          class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed fade-in"
         >
-          Geliştirdiğimiz projeler ve açık kaynak katkılarımız
+          Geliştirdiğimiz web siteleri ve projelerimiz
         </p>
       </div>
     </section>
 
     <!-- Projects Grid -->
     <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto masonry-reveal">
         {projects.map((project, index) => (
-          <div class="scrub-reveal">
+          <div class={index % 2 === 0 ? 'slide-from-left-item' : 'slide-from-right-item'}>
             <ProjectCard {...project} />
           </div>
         ))}
@@ -53,15 +53,14 @@ const projects = [
     <!-- CTA Section -->
     <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div 
-        class="max-w-3xl mx-auto text-center bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-12 md:p-16"
-        data-aos="fade-up"
+        class="max-w-3xl mx-auto text-center bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-12 md:p-16 scale-up-reveal"
       >
-        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white scrub-reveal">
-          Projeniz İçin Hazırız
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+          Web Siteniz İçin Hazırız
         </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 leading-relaxed scrub-reveal">
-          Benzer bir proje mi geliştirmek istiyorsunuz? Veya özel bir çözüme mi ihtiyacınız var? 
-          Hemen iletişime geçin, birlikte harika şeyler yapalım.
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-10 leading-relaxed">
+          Modern ve profesyonel bir web sitesi mi istiyorsunuz? Veya mevcut web sitenizi 
+          güncellemek mi istiyorsunuz? Hemen iletişime geçin, birlikte harika web siteleri yapalım.
         </p>
         <a
           href="/contact"
@@ -80,76 +79,30 @@ const projects = [
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { 
+    initMagneticButtons, 
+    initFadeIn,
+    initSlideReveal,
+    initStaggerReveal
+  } from '../scripts/animations';
   
   gsap.registerPlugin(ScrollTrigger);
 
-
-  // Scrub Reveal for general elements
-  function initScrubReveal() {
-    const revealElements = document.querySelectorAll('.scrub-reveal');
-    
-    revealElements.forEach((element) => {
-      gsap.fromTo(element, 
-        {
-          opacity: 0,
-          y: 60,
-          scale: 0.95
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 85%',
-            end: 'top 50%',
-            scrub: true
-          }
-        }
-      );
-    });
-  }
-
-  // Magnetic button effect
-  function initMagneticButtons() {
-    const magneticButtons = document.querySelectorAll('.magnetic-btn');
-    
-    magneticButtons.forEach((btn) => {
-      if (!(btn instanceof HTMLElement)) return;
-      
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        gsap.to(btn, {
-          x: x * 0.3,
-          y: y * 0.3,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      });
-      
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-          x: 0,
-          y: 0,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      });
-    });
-  }
-
   // Initialize animations when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initScrubReveal();
-      initMagneticButtons();
-    });
-  } else {
-    initScrubReveal();
+  function initAnimations() {
     initMagneticButtons();
+    // Fade in for hero
+    initFadeIn('.fade-in');
+    // Alternating slide reveals for project cards
+    initSlideReveal('.slide-from-left-item', 'left');
+    initSlideReveal('.slide-from-right-item', 'right');
+    // Scale up for CTA
+    initStaggerReveal('.scale-up-reveal', 0);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimations);
+  } else {
+    initAnimations();
   }
 </script>

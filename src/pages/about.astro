@@ -9,15 +9,15 @@ import TeamMember from '../components/TeamMember.astro';
     <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div class="max-w-3xl mx-auto text-center">
         <h1 
-          class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 dark:text-white scrub-reveal"
+          class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 dark:text-white fade-in"
         >
           Hakkımızda
         </h1>
         <p 
-          class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed scrub-reveal"
+          class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed fade-in"
         >
-          İnovatif teknoloji çözümleri geliştiren bir ekip olarak, 
-          müşterilerimize en iyi deneyimi sunmak için çalışıyoruz.
+          Modern web siteleri geliştiren bir ekip olarak, 
+          müşterilerimize en iyi web deneyimini sunmak için çalışıyoruz.
         </p>
       </div>
     </section>
@@ -26,23 +26,21 @@ import TeamMember from '../components/TeamMember.astro';
     <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div class="max-w-4xl mx-auto">
         <div 
-          class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 md:p-12"
-          data-aos="fade-up"
+          class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 md:p-12 slide-from-left"
         >
-          <h2 class="text-4xl md:text-5xl font-bold mb-8 text-gray-900 dark:text-white scrub-reveal">
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 text-gray-900 dark:text-white">
             Misyonumuz
           </h2>
-          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed scrub-reveal">
+          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
-              EfkyTech olarak, modern yazılım çözümleri ile işletmelerin dijital dönüşüm 
-              yolculuklarında güvenilir bir partner olmayı hedefliyoruz. Teknoloji ve 
-              tasarımı bir araya getirerek, kullanıcı deneyimini ön planda tutan 
-              çözümler geliştiriyoruz.
+              EfkyTech olarak, modern web siteleri geliştirerek işletmelerin dijital varlıklarını 
+              güçlendirmeyi hedefliyoruz. Teknoloji ve tasarımı bir araya getirerek, kullanıcı 
+              deneyimini ön planda tutan, performanslı ve güvenli web siteleri oluşturuyoruz.
             </p>
             <p>
-              Müşterilerimizin ihtiyaçlarını anlamak ve onlara en uygun çözümleri sunmak 
-              için sürekli kendimizi geliştiriyoruz. Kalite, güvenilirlik ve yenilikçilik 
-              değerlerimizle, her projede mükemmelliği hedefliyoruz.
+              Müşterilerimizin ihtiyaçlarını anlamak ve onlara en uygun web sitesi çözümlerini 
+              sunmak için sürekli kendimizi geliştiriyoruz. Kalite, güvenilirlik ve yenilikçilik 
+              değerlerimizle, her web sitesi projesinde mükemmelliği hedefliyoruz.
             </p>
           </div>
         </div>
@@ -51,7 +49,7 @@ import TeamMember from '../components/TeamMember.astro';
 
     <!-- Team Section - Sticky with Pinning -->
     <section class="team-sticky-section container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div class="text-center mb-16 scrub-reveal">
+      <div class="text-center mb-16 fade-in">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
           Ekibimiz
         </h2>
@@ -60,7 +58,7 @@ import TeamMember from '../components/TeamMember.astro';
         </p>
       </div>
       
-      <div class="team-cards-wrapper grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div class="team-cards-wrapper grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto scale-rotate-items">
         <div class="founder-card" data-card="1">
           <TeamMember
             name="Furkan R. Yalın"
@@ -147,6 +145,7 @@ import TeamMember from '../components/TeamMember.astro';
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { initScrubReveal, initMagneticButtons, initStaggerReveal } from '../scripts/animations';
   
   gsap.registerPlugin(ScrollTrigger);
 
@@ -202,7 +201,7 @@ import TeamMember from '../components/TeamMember.astro';
     }
   });
 
-  // Sticky Team Section with Pinning - Simplified
+  // Sticky Team Section with improved animations
   function initStickyTeamSection() {
     const teamSection = document.querySelector('.team-sticky-section');
     if (!teamSection) return;
@@ -210,100 +209,20 @@ import TeamMember from '../components/TeamMember.astro';
     const cards = document.querySelectorAll('.founder-card');
     if (cards.length === 0) return;
 
-    // Set initial state
-    cards.forEach((card) => {
-      gsap.set(card, { opacity: 0, y: 50, scale: 0.95 });
-    });
-
-    // Animate cards on scroll - simple fade in
-    cards.forEach((card, index) => {
-      const cardElement = card as HTMLElement;
-      
-      gsap.to(cardElement, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: cardElement,
-          start: 'top 85%',
-          end: 'top 60%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    });
-  }
-
-  // Scrub Reveal for general elements
-  function initScrubReveal() {
-    const revealElements = document.querySelectorAll('.scrub-reveal');
-    
-    revealElements.forEach((element) => {
-      gsap.fromTo(element, 
-        {
-          opacity: 0,
-          y: 60,
-          scale: 0.95
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 85%',
-            end: 'top 50%',
-            scrub: true
-          }
-        }
-      );
-    });
-  }
-
-  // Magnetic button effect
-  function initMagneticButtons() {
-    const magneticButtons = document.querySelectorAll('.magnetic-btn');
-    
-    magneticButtons.forEach((btn) => {
-      if (!(btn instanceof HTMLElement)) return;
-      
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        gsap.to(btn, {
-          x: x * 0.3,
-          y: y * 0.3,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      });
-      
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-          x: 0,
-          y: 0,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      });
-    });
+    // Use stagger reveal for smoother card animations
+    initStaggerReveal('.founder-card', 0.2);
   }
 
   // Initialize animations when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initStickyTeamSection();
-      initScrubReveal();
-      initMagneticButtons();
-    });
-  } else {
+  function initAnimations() {
     initStickyTeamSection();
     initScrubReveal();
     initMagneticButtons();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimations);
+  } else {
+    initAnimations();
   }
 </script>
