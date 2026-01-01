@@ -54,13 +54,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    
-    <!-- Import AOS CSS from node_modules as fallback -->
-    <style>
-      /* AOS will be loaded via CDN, this is just a fallback */
-    </style>
+    <!-- AOS CSS: try unpkg, fall back to jsDelivr if blocked -->
+    <script is:inline>
+      (function() {
+        try {
+          var l = document.createElement('link');
+          l.rel = 'stylesheet';
+          l.href = 'https://unpkg.com/aos@2.3.1/dist/aos.css';
+          l.onerror = function() {
+            var l2 = document.createElement('link');
+            l2.rel = 'stylesheet';
+            l2.href = 'https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css';
+            document.head.appendChild(l2);
+          };
+          document.head.appendChild(l);
+        } catch (e) {
+          console.warn('AOS CSS loader failed', e);
+        }
+      })();
+    </script>
     
     <script>
       // Dark mode toggle - localStorage'dan tercihi oku
@@ -100,7 +112,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
             }
           };
           script.onerror = function() {
-            console.warn('AOS library failed to load');
+            // Try jsDelivr fallback
+            console.warn('AOS failed to load from unpkg, trying jsDelivr...');
+            var alt = document.createElement('script');
+            alt.src = 'https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js';
+            alt.onload = function() { if (window.AOS) window.AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true, offset: 100, disable: 'mobile' }); };
+            alt.onerror = function() { console.warn('AOS failed to load from jsDelivr as well'); };
+            document.head.appendChild(alt);
           };
           document.head.appendChild(script);
         });
